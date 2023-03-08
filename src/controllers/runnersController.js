@@ -6,6 +6,7 @@ const mysql = require('serverless-mysql')({
         user: process.env.dbUsername,
         password: process.env.dbPassword
     },
+    library: require('mysql2'),
 })
 
 
@@ -43,7 +44,7 @@ exports.getRunnerById = async function(req, res) {
 exports.createRunner = async function(req, res) {
     try {
         const { document_type, document_number, name, surname, email, sex_id } = req.body;
-        const [result] = await mysql.query(
+        const result = await mysql.query(
             'INSERT INTO runners (document_type, document_number, name, surname, email, sex_id) VALUES (?, ?, ?, ?, ?, ?)', [document_type, document_number, name, surname, email, sex_id],
         );
         mysql.end();
