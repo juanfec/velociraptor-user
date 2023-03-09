@@ -3,7 +3,6 @@ const runnersController = require('../controllers/runnersController');
 
 const router = express.Router();
 
-router.get('/runners', runnersController.getRunners);
 router.get('/runners/:id', runnersController.getRunnerById);
 router.post('/runners', runnersController.createRunner);
 router.put('/runners/:id', runnersController.updateRunner);

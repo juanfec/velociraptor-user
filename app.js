@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
 const serverless = require('serverless-http');
@@ -20,8 +21,16 @@ app.use('/', userRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Internal Error');
+    if (err.errno === 1062) {
+        console.log(err);
+        res.status(400).json({ message: 'Already exists' });
+    } else if (err.errno === 1452) {
+        console.log(err);
+        res.status(409).json({ message: 'Foreign key constraint fails' });
+    } else {
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // Export the app
