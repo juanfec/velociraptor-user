@@ -56,7 +56,7 @@ exports.updateRunner = async function(req, res, next) {
     }
 };
 
-exports.deleteRunner = async function(req, res) {
+exports.deleteRunner = async function(req, res, next) {
     try {
         const result = await mysql.query('DELETE FROM runners WHERE id = ?', [req.params.id]);
         await mysql.end();
